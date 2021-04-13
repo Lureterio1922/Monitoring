@@ -1,5 +1,4 @@
-"""Monitoring URL Configuration
-
+"""VideoSite URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 Examples:
@@ -13,9 +12,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import admin
-from django.urls import path
+from django.conf.urls.static import static
+from django.urls import path, include
+
+from Monitoring import settings
 
 urlpatterns = [
+    path(r'', lambda r: HttpResponseRedirect('admin/')),
     path('admin/', admin.site.urls),
+    # path('videos/', include("videos.urls")),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
