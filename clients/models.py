@@ -8,9 +8,25 @@ class Client(Model):
 
     longitude = models.FloatField(verbose_name="Долгота", default=0)
     latitude = models.FloatField(verbose_name="Широта", default=0)
-    status = models.TextField(verbose_name='Статус', default='') #сделать choises
     name = models.CharField(verbose_name="Название", max_length=100, default="")
-    url = models.TextField(verbose_name='Ссылка', default='')
+    url = models. CharField(verbose_name='Ссылка', max_length=1000, default='')
+
+    NORMAL = "1"
+    Server_lies = "2"
+    Active_orders = "3"
+    Last_minute_applications = "4"
+    Integration_system_problems = "5"
+    Warning = "6"
+
+    STATUS_CHOICES = (
+        (NORMAL, "Всё нормально"),
+        (Server_lies, "Сервер лежит"),
+        (Active_orders, "Активные заявки"),
+        (Last_minute_applications, "Горящие заявки"),
+        (Integration_system_problems, "Проблемы с системой интеграции"),
+        (Warning, "Предупреждение"),
+    )
+    status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
 
     def __str__(self):
         return self.name
