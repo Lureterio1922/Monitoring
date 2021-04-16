@@ -3,6 +3,12 @@ from django.db.models import Model
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
+NORMAL = "1"
+Server_lies = "2"
+Active_orders = "3"
+Last_minute_applications = "4"
+Integration_system_problems = "5"
+WARNING = "6"
 
 class Client(Model):
     class Meta:
@@ -14,12 +20,7 @@ class Client(Model):
     name = models.CharField(verbose_name="Название", max_length=100, default="")
     url = models. CharField(verbose_name='Ссылка', max_length=1000, default='')
 
-    NORMAL = "1"
-    Server_lies = "2"
-    Active_orders = "3"
-    Last_minute_applications = "4"
-    Integration_system_problems = "5"
-    Warning = "6"
+
 
     STATUS_CHOICES = (
         (NORMAL, "Всё нормально"),
@@ -27,7 +28,7 @@ class Client(Model):
         (Active_orders, "Активные заявки"),
         (Last_minute_applications, "Горящие заявки"),
         (Integration_system_problems, "Проблемы с системой интеграции"),
-        (Warning, "Предупреждение"),
+        (WARNING, "Предупреждение"),
     )
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
 
