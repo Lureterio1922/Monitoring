@@ -5,6 +5,14 @@
  * @author Luke Mahe (v2 author: Xiaoxi Wu)
  */
 
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
 function $(element) {
   return document.getElementById(element);
 }
