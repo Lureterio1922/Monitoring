@@ -62,5 +62,4 @@ def appointment_save(sender, instance, **kwargs):
     clien_appointment = ClientAppointment()
     clien_appointment.client = instance.client
     clien_appointment.appointment = instance
-
     clien_appointment.save()
