@@ -27,7 +27,7 @@ def get_clients(request):
         obj = {
             "latitude":client.latitude,
             "longitude":client.longitude,
-            "color":"#ffffff",
+            "color":get_color(client),
             "name":client.name ,
         }
         result.append(obj)
