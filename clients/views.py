@@ -29,3 +29,12 @@ def get_client_info(request, client_id):
             "days": app.days,
         }
         result.append(d)
+    cl = {
+        "latitude": client.latitude,
+        "longitude": client.longitude,
+        "color": "#ffffff",
+        "name": client.name,
+        "appointments": result
+    }
+
+    return JsonResponse(data=cl, safe=False)
