@@ -22,7 +22,7 @@ from Monitoring import settings
 urlpatterns = [
     path(r'', lambda r: HttpResponseRedirect('admin/')),
     path('admin/', admin.site.urls),
-    # path('videos/', include("videos.urls")),
+    path('clients/', include("clients.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
