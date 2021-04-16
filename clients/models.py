@@ -1,5 +1,8 @@
 from django.db import models
 from django.db.models import Model
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+
 
 class Client(Model):
     class Meta:
@@ -39,7 +42,7 @@ class Appointment(Model):
     text = models.TextField(verbose_name='Описание', default='', blank=True)
     date = models.DateField(verbose_name="Дата", default=None, null=True)
     days = models.IntegerField(verbose_name="Количество дней выполнения", default=0)
-    client = models.ForeignKey(Client,verbose_name="Клиент",on_delete=models.CASCADE)
+    client = models.ForeignKey(Client,verbose_name="Клиент", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -50,3 +53,14 @@ class ClientAppointment(Model):
         verbose_name_plural = 'заявки'
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
     appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return ''
+
+@receiver(post_save, sender=Appointment)
+def appointment_save(sender, instance, **kwargs):
+    clien_appointment = ClientAppointment()
+    clien_appointment.client = instance.client
+    clien_appointment.appointment = instance
+
+    clien_appointment.save()
