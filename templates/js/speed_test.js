@@ -2,6 +2,14 @@ function $(element) {
   return document.getElementById(element);
 }
 
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return JSON.parse(xmlHttp.responseText);
+}
+
 var speedTest = {};
 
 speedTest.pics = null;
@@ -15,7 +23,6 @@ speedTest.init = function() {
   var options = {
     'zoom': 2,
     'center': latlng,
-    'mapId': "a71db9a0115114a1",
     'mapTypeId': google.maps.MapTypeId.ROADMAP
   };
 
@@ -35,23 +42,13 @@ speedTest.init = function() {
 };
 
 speedTest.showMarkers = function() {
-  speedTest.markers = [];
 
-  var type = 1;
-  if ($('usegmm').checked) {
-    type = 0;
-  }
+  clients = httpGet("http://127.0.0.1:8000/clients/get_clients/")
 
-  if (speedTest.markerClusterer) {
-    speedTest.markerClusterer.clearMarkers();
-  }
+    console.log(clients);
 
-  var panel = $('markerlist');
-  panel.innerHTML = '';
-  var numMarkers = $('nummarkers').value;
-
-  for (var i = 0; i < numMarkers; i++) {
-    var titleText = speedTest.pics[i].photo_title;
+  for (var i = 0; i < clients.length; i++) {
+    var titleText = "mock";
     if (titleText === '') {
       titleText = 'No title';
     }
@@ -66,14 +63,9 @@ speedTest.showMarkers = function() {
     panel.appendChild(item);
 
 
-    var latLng = new google.maps.LatLng(speedTest.pics[i].latitude,
-        speedTest.pics[i].longitude);
-    
-    var imageUrl = (speedTest.pics[i].active) ? 
-      /* синий маркер */   'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=FFFFFF,008CFF,000000&ext=.png'
-      :
-      /* красный маркер */ 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=FFFFFF,ff008c,000000&ext=.png';
-    
+    var latLng = new google.maps.LatLng(clients[i].latitude, clients[i].longitude);
+    var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=FFFFFF,008CFF,000000&ext=.png';
+
     var markerImage = new google.maps.MarkerImage(imageUrl,
         new google.maps.Size(24, 32));
 
