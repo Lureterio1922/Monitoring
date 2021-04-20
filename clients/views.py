@@ -29,6 +29,8 @@ def get_clients(request):
             "longitude":client.longitude,
             "color":get_color(client),
             "name":client.name ,
+            "status":client.status,
+            "description":client.description,
         }
         result.append(obj)
     return JsonResponse(data=result,safe=False)

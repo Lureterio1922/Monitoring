@@ -19,6 +19,7 @@ class Client(Model):
     latitude = models.FloatField(verbose_name="Широта", default=0)
     name = models.CharField(verbose_name="Название", max_length=100, default="")
     url = models. CharField(verbose_name='Ссылка', max_length=1000, default='')
+    description = models.TextField(verbose_name='Описание', default='', blank=True)
 
 
 
