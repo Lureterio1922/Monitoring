@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.shortcuts import render
 
 from clients.models import Client, Appointment
 
@@ -29,3 +30,15 @@ def get_client_info(request, client_id):
 
 
     return JsonResponse(data=cl, safe=False)
+
+def get_map(request):
+    template, context = get_template_context()
+
+    return render(request, template, context)
+
+
+def get_template_context():
+    template = "main.html"
+    context = {
+    }
+    return template, context

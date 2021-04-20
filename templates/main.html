@@ -5,13 +5,13 @@
     <title> Ваши сервера </title>
 
     <style>
-      
+
       body {
         margin: 0;
         padding: 0;
         font-family: Arial;
         font-size: 14px;
-        background-color: #ffdae0;
+
       }
       #panel {
         position: absolute;
@@ -19,7 +19,7 @@
         height: 550px;
         width: 300px;
         min-width: 230px;
-        background-color: #ffc0cb;
+
       }
       #resize-horizontal {
         background-color:rgb(114, 28, 117);
@@ -46,9 +46,7 @@
         width: auto;
         height: 550px;
       }
-      .gm-style { 
-        background-color: #ffdae0; /* изменяет стандартный фон карты*/
-      }
+
       .controls {
         margin-top: 16px;
         border: 1px solid transparent;
@@ -97,9 +95,7 @@
       .title:visited {
         color: #000;
       }
-      .title:hover {
-        background: #ffdae0;
-      }
+
       .no_active {
         background: #f658cf;
       }
@@ -128,12 +124,12 @@
         width: 200px;
       }
     </style>
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"></script>
-    <script src="data.json"></script>
-    <script type="text/javascript" src="../libs/markerclusterer.js"></script>
-    <script src="speed_test.js"></script>
-    <script type="text/javascript" src="../libs/resize-map.js" ></script>
+    <script src="/static/js/data.json"></script>
+    <script type="text/javascript" src="/static/js/markerclusterer.js"></script>
+    <script src="/static/js/speed_test.js"></script>
+    <script type="text/javascript" src="/static/js/resize-map.js" ></script>
     <script>
       google.maps.event.addDomListener(window, 'load', speedTest.init);
     </script>
@@ -165,7 +161,7 @@
       <strong>Ваши сервера:</strong>
       <div id="markerlist">
       </div>
-     
+
     </div>
     <div id="map-container">
       <input id="pac-input" class="controls" type="text" placeholder="Search Box">
