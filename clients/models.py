@@ -3,6 +3,22 @@ from django.db.models import Model
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 
+def get_color(client):
+    if client.status == NORMAL:
+        return "#00ff00"
+    elif client.status ==Server_lies:
+        return '#ff0000'
+    elif client.status == Active_orders:
+        return '#f08080'
+    elif client.status ==Last_minute_applications:
+        return '#8b0000'
+    elif client.status ==Integration_system_problems:
+        return '#000000'
+    elif client.status == WARNING:
+        return '#FFFF00'
+
+
+
 NORMAL = "1"
 Server_lies = "2"
 Active_orders = "3"
@@ -35,6 +51,18 @@ class Client(Model):
 
     def __str__(self):
         return self.name
+
+    def get_dict(self):
+        return {
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "color": get_color(self),
+            "name": self.name,
+            "status": self.status,
+            "description": self.description,
+            "id":self.id
+        }
+
 
 class Appointment(Model):
     class Meta:
