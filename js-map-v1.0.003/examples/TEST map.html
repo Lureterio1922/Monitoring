@@ -109,24 +109,37 @@
       #timetaken {
         color: #f00;
       }
+      
       .info {
         width: 200px;
       }
-      .info img {
-        border: 0;
-      }
+      
       .info-body {
         width: 200px;
         height: 200px;
-        line-height: 200px;
         margin: 2px 0;
-        text-align: center;
-        overflow: hidden;
       }
-      .info-img {
-        height: 220px;
-        width: 200px;
+      /* --- status label -- */
+      .status {
+        width: 95px;
+        padding-bottom: 10px;
       }
+      .label-primary {
+          background-color: #337ab7;
+      }
+      .label {
+          display: inline;
+          padding: .2em .6em .3em;
+          font-size: 100%;
+          font-weight: 700;
+          line-height: 1;
+          color: #fff;
+          text-align: center;
+          white-space: nowrap;
+          vertical-align: baseline;
+          border-radius: .25em;
+      }
+      /* --- end status label -- */
     </style>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"></script>
