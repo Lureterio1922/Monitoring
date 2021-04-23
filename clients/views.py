@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from Monitoring.settings import BASE_URL
 from clients.models import Client, Appointment
 
 
@@ -40,5 +41,6 @@ def get_map(request):
 def get_template_context():
     template = "main.html"
     context = {
+        "BASE_URL": BASE_URL
     }
     return template, context

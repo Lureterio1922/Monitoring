@@ -43,7 +43,7 @@ speedTest.init = function() {
 
 speedTest.showMarkers = function() {
 
-  clients = httpGet("http://127.0.0.1:8000/clients/get_clients/")
+  clients = httpGet(BASE_URL + "/clients/get_clients/")
 
     console.log(clients);
 
