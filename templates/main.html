@@ -126,9 +126,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlyHzmksm8PlMbK1QnfvU9oRLliSmFXEw&callback=initAutocomplete&libraries=places&v=weekly"></script>
     <script src="/static/js/data.json"></script>
     <script type="text/javascript" src="/static/js/markerclusterer.js"></script>
-    <script src="/static/js/speed_test.js">
-      var BASE_URL = "{{BASE_URL}}"
+    <script type="text/javascript" >
+            var BASE_URL = "{{BASE_URL}}"
     </script>
+    <script src="/static/js/speed_test.js"></script>
     <script type="text/javascript" src="/static/js/resize-map.js" ></script>
     <script>
       google.maps.event.addDomListener(window, 'load', speedTest.init);
