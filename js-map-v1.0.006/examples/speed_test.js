@@ -16,8 +16,12 @@ speedTest.init = function() {
     'zoom': 2,
     'minZoom':2,
     'center': latlng,
+    // 'fullscreenControl': false,
+    // 'streetViewControl': false,
+    // 'zoomControl': false,
     'disableDefaultUI': true,
-    'mapTypeId': google.maps.MapTypeId.ROADMAP
+    'mapTypeId': google.maps.MapTypeId.ROADMAP,
+    
   };
 
   speedTest.map = new google.maps.Map($('map'), options);
@@ -33,12 +37,13 @@ speedTest.init = function() {
 
   speedTest.showMarkers();
   speedTest.ImportSearchLib()
+  speedTest.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push($('legend'));
 };
 
 speedTest.showMarkers = function() {
   speedTest.markers = [];
 
-  // включение кластеризации
+  // Включение кластеризации
   var type = 1;
   if ($('usegmm').checked) {
     type = 0;
@@ -51,29 +56,34 @@ speedTest.showMarkers = function() {
 
   for (var i = 0; i < speedTest.servers.length; i++) {
     var titleText = speedTest.servers[i].title;
-    if (titleText === '') {titleText = 'No title';}
     var statusText = speedTest.servers[i].status_text;
-    if (statusText === '') {statusText = 'No status';}
     var statusColor = speedTest.servers[i].status_color;
-    if (statusColor === '') {statusColor = '#808080';}
     var markerColor = speedTest.servers[i].marker_color.replace("#", "");
-    if (markerColor === '') {markerColor = '808080';}
+    var ipportText = speedTest.servers[i].ipport;
+    
     
     var item = document.createElement('tr');
-    var status = document.createElement('td');
-    var title = document.createElement('td');
-
     // 1 колонка - статус
+    var status = document.createElement('td');
+    // 2 колонка - название
+    var title = document.createElement('td');
+    // 3 колонка - IP:Порт
+    var ipport = document.createElement('td');
+
     status.className = "status";
     status.innerHTML = `<span class="label" style="background-color:${statusColor}">${statusText}</span>`
  
-    // 2 колонка - название
     title.href = '#';
     title.className =  'title';
     title.innerHTML = titleText;
 
+    ipport.className = "ipport"
+    ipport.innerHTML = `<span class="ipport_text">${ipportText}</span>`
+
+    
     item.appendChild(status);
     item.appendChild(title);
+    item.appendChild(ipport);
     panel.appendChild(item);
 
 
@@ -91,9 +101,10 @@ speedTest.showMarkers = function() {
 
     var fn = speedTest.markerClickFunction(speedTest.servers[i], latLng, statusColor, statusText);
       google.maps.event.addListener(marker, 'click', fn);
-      google.maps.event.addDomListener(title, 'click', fn);
+      google.maps.event.addDomListener(item, 'click', fn);
       speedTest.markers.push(marker);
   }
+
 
   window.setTimeout(speedTest.time, 0);
 };
@@ -130,8 +141,15 @@ speedTest.markerClickFunction = function(server, latlng) {
     speedTest.infoWindow.setContent(infoHtml);
     speedTest.infoWindow.setPosition(latlng);
     speedTest.infoWindow.open(speedTest.map);
+    
+    google.maps.event.addListener(speedTest.map, 'click', function() {
+      speedTest.infoWindow.close();
+    });
   };
 };
+
+
+
 
 speedTest.clear = function() {
   $('timetaken').innerHTML = 'cleaning...';

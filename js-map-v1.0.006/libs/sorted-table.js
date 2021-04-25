@@ -48,7 +48,7 @@ function isDate(testDate){
 var headers = document.querySelectorAll('#tblSortTest_dom thead tr th');
 for (var i = 0; i < headers.length; i++) {
   headers[i].addEventListener('click', function() {
-    //console.log(this.innerHTML + "; colIndex=" +this.cellIndex );
+    // console.log(this.innerHTML + "; colIndex=" +this.cellIndex );
     sortColumn(this.cellIndex);
   });
 }
