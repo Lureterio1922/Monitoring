@@ -1,0 +1,586 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" content="width=device-width, initial-scale=1">
+  <title> Ваши сервера </title>
+  <style>
+  /*===== Scrollbar =====*/
+  ::-webkit-scrollbar {width: 8px;height: 5px;}
+  ::-webkit-scrollbar-track-piece {background:#EAF3F3;}
+  ::-webkit-scrollbar-thumb:vertical {height:6px;background:#167F92;}
+  ::-webkit-scrollbar-thumb:vertical:hover {background: #126675;}
+  ::-webkit-scrollbar-thumb:horizontal {position: absolute; height:0px; width:0px;background:transparent;}
+  ::-webkit-scrollbar-thumb:horizontal:hover {position: absolute;height:8px; width:4px; background: #167F92;}
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 14px;
+    background: url(../images/paper_fibers.png) repeat;
+  }
+
+  #panel {
+    position: absolute;
+    float: left;
+    height: 550px;
+    width: 300px;
+    min-width: 230px;
+  }
+
+  /* --- Resize map library ---*/
+  #resize-horizontal {
+    background-color: rgb(35, 136, 194);
+    border-radius: 12px;
+    float: right;
+    margin-right: 0;
+    width: 5px;
+    height: 100%;
+    cursor: e-resize;
+  }
+
+  #resize-vertical {
+    background-color: rgb(35, 136, 194);
+    border-radius: 12px;
+    float: bottom;
+    margin-bottom: 0;
+    height: 5px;
+    width: 100%;
+    cursor: ns-resize;
+  }
+  /* --- End resize map library ---*/
+
+  #map-container {
+    margin-left: 300px;
+    width: auto;
+    height: 550px;
+  }
+
+  #map {
+    width: auto;
+    height: 550px;
+  }
+  
+  /* Remove Google Logo, terms of use, and Report a problem div. */
+  a[href^="http://maps.google.com/maps"]{display:none !important}
+  a[href^="https://maps.google.com/maps"]{display:none !important}
+  .gm-style-cc { display:none!important;}
+  .gmnoprint div {background:none !important;}
+  .gm-style {background: url(../images/paper_fibers.png) repeat;}
+
+  /* --- Search field---*/
+  .controls {
+    margin-top: 16px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  #pac-input {
+    position: absolute;
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+    animation-duration: 0.4s;
+    animation-name: fadeIn;
+  }
+  
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+
+  .pac-container {
+    font-family: Roboto;
+  }
+  /* --- End Search field---*/
+  
+  /* --- Main table -- */
+  .mytable {
+    position:absolute;
+    width: 98%;
+    height: 80%;
+    display: block;
+    overflow: auto;
+    font-size:14px;
+  }
+  .mytable {
+    background: #FFF;
+    color: #024457;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.25);
+    border-collapse: collapse;
+    border-radius: 2px;
+    max-height: 500px;
+  }
+  
+  table thead th { position: sticky; top: 0; z-index: 1; }
+  table tbody th { position: sticky; left: 0; }
+  
+  .cell_1 { width: 10%;}
+  .cell_2 { width:70%; }
+  .cell_3 { width:20%; max-width: 50px;}
+
+  /* .mytable tr > *:nth-child(3) {
+    display: none;
+  } */
+  .mytable tr {border: 1px solid #D9E4E6;}
+  .mytable tbody tr {cursor: pointer;}
+  .mytable tr:nth-child(odd) {background-color: #EAF3F3;}
+  .mytable tr:nth-child(odd):hover {background-color: #e6eeee;}
+  .mytable th {
+    font-size:16px;
+    user-select: none;
+    border: 1px solid #FFF;
+    background-color: #167F92;
+    color: #FFF;
+    padding: 1em;
+  }
+  .mytable th:hover {background-color: #177a8b;}
+  .mytable td {
+    display: block;
+    word-wrap: break-word;
+    max-height: 1em;
+  }
+  .mytable td:first-child {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #D9E4E6;
+  }
+  @media (min-width: 480px) {
+    .mytable td {
+      border: 1px solid #D9E4E6;
+    }
+  }
+  .mytable th, .mytable td {
+    text-align: left;
+    margin: .5em 1em;
+  }
+  @media (min-width: 480px) {
+    .mytable th, .mytable td {
+      display: table-cell;
+      padding: 1em;
+    }
+  }
+  .title {
+    padding: 5px;
+    color: #000;
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    overflow     : hidden;
+    max-width    : 100px; /* Can be any size, just small enough */
+  }
+  #timetaken {
+    color: #f00;
+  }
+  .hidden {
+    display: none !important;
+  }
+  .btn-hide-column {
+    cursor: pointer;
+    position:absolute;
+    right: 10px;
+    color: #ffffff;
+  }
+  /* --- End main table -- */
+
+  /* --- Info window --- */
+  .info {
+    width: 200px;
+  }
+
+  .info-body {
+    width: 200px;
+    height: 200px;
+    margin: 2px 0;
+  }
+
+  .gm-ui-hover-effect  {
+    display: none !important;
+  }
+  /* --- End info window --- */
+
+  /* --- Status label --- */
+  .status {
+    padding-bottom: 10px;
+  }
+
+  .label {
+    padding: .2em .6em .3em;
+    font-size: 100%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+  }
+  /* --- end status label -- */
+
+  /*  --- Legend specific  ---*/
+  #legend {
+    position: absolute;
+    right: -400px;
+    padding: 10px;
+    margin: 10px;
+    user-select: none; /* FIXME */
+    padding: 6px 8px;
+    font: 14px Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    line-height: 24px;
+    color: #555;
+    animation-duration: 1s;
+    animation-name: fadeIn;
+  }
+
+  @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+  #legend h4 {
+    text-align: center;
+    font-size: 16px;
+    margin: 2px 12px 8px;
+    color: #777;
+  }
+
+  #legend span {
+    position: relative;
+    bottom: 3px;
+  }
+
+  #legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin: 0 8px 0 0;
+    opacity: 0.7;
+  }
+
+  #legend i.icon {
+    background-size: 18px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  /*  --- end Legend specific  ---*/
+
+  canvas#live2dcanvas {
+    z-index: 1000;
+    border: 0 !important;
+    position: fixed;
+    right: 0;
+    bottom: -78px;
+    animation-name: example;
+    animation-duration: 1.4s;
+  }
+  @keyframes example {
+    from {bottom: -400px;opacity: 0;}
+    to {bottom: -78px;opacity: 1;}
+  }
+  </style>
+  <link rel="stylesheet" href="../libs/preload.css"><script> setTimeout(function() {document.body.classList.add('loaded');}, 600)</script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <script src="data.json"></script>
+  <script type="text/javascript" src="../libs/markerclusterer.js"></script>
+  <script src="speed_test.js"></script>
+  
+  <script>
+    google.maps.event.addDomListener(window, 'load', speedTest.init);
+  </script>
+</head>
+
+<body>
+  <div id="loader-wrapper">
+    <div id="loader"></div>
+    
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+    
+  </div>
+
+  <div id="panel">
+    <div id="resize-horizontal"></div>
+    <h3>Карта активности серверов</h3>
+
+    <div>
+      <input type="checkbox" id="usegmm" />
+      <span>Использовать кластеризацию маркеров<br></span>
+      <span>Время отклика: <span id="timetaken"></span> ms</span>
+    </div>
+
+    <strong>Ваши сервера:</strong>
+    <table class="mytable" id="tblSortTest_dom">
+      <thead>
+        <tr>
+          <th class="cell_1" style="text-align: center;">Статус</th>
+          <th class="cell_2">Название<i class="btn-hide-column fa fa-eye-slash"></th>
+          <th class="cell_3">IP:Порт <i class="btn-hide-column fa fa-eye-slash"></th>
+        </tr>
+      </thead>
+      <tbody id="markerlist">
+ 
+      </tbody>
+    </table>
+    </div>
+
+  </div>
+  <div id="map-container">
+    <input id="pac-input" class="controls" type="text" placeholder="Введите запрос или адрес">
+    <div id="map"></div>
+    <div id="legend" class="leaflet-control"><h4>Состояние</h4><i style="background: #477AC2"></i><span>Low</span><br><i style="background: #448D40"></i><span>Medium</span><br><i style="background: #E6E696"></i><span>High</span><br><i style="background: #E8E6E0"></i><span>Full</span><br><i style="background: #FFFFFF"></i><span>Down</span><br></div>
+    <div id="resize-vertical"></div>
+  </div>
+  
+  <script type="text/javascript" src="../libs/resize-map.js"></script>
+  <script type="text/javascript" src="../libs/hide-columns.js"></script>
+  <script type="text/javascript" src="../libs/sorted-table.js"></script>
+  <script type="text/javascript" src="../libs/resize-columns.js"></script>
+  
+  <canvas id="live2dcanvas" width="200" height="400"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-koharu/assets/koharu.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+
+  <script src="https://www.amcharts.com/lib/4/core.js"></script>
+  <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://www.amcharts.com/lib/4/plugins/timeline.js"></script>
+  <script src="https://www.amcharts.com/lib/4/plugins/bullets.js"></script>
+  <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+  <script>/**
+    * ---------------------------------------
+    * This demo was created using amCharts 4.
+    * 
+    * For more information visit:
+    * https://www.amcharts.com/
+    * 
+    * Documentation is available at:
+    * https://www.amcharts.com/docs/v4/
+    * ---------------------------------------
+    */
+   
+   // Themes begin
+   am4core.useTheme(am4themes_animated);
+   // Themes end
+   
+   var chart = am4core.create("chartdiv", am4plugins_timeline.SerpentineChart);
+   chart.curveContainer.padding(50, 20, 50, 20);
+   chart.levelCount = 4;
+   chart.yAxisRadius = am4core.percent(25);
+   chart.yAxisInnerRadius = am4core.percent(-25);
+   chart.maskBullets = false;
+   
+   var colorSet = new am4core.ColorSet();
+   colorSet.saturation = 0.5;
+   
+   chart.data = [{
+       "category": "Module #1",
+       "start": "2019-01-10",
+       "end": "2019-01-13",
+       "color": colorSet.getIndex(0),
+       "task": "Gathering requirements"
+   }, {
+       "category": "Module #1",
+       "start": "2019-02-05",
+       "end": "2019-04-18",
+       "color": colorSet.getIndex(0),
+       "task": "Development"
+   }, {
+       "category": "Module #2",
+       "start": "2019-01-08",
+       "end": "2019-01-10",
+       "color": colorSet.getIndex(5),
+       "task": "Gathering requirements"
+   }, {
+       "category": "Module #2",
+       "start": "2019-01-12",
+       "end": "2019-01-15",
+       "color": colorSet.getIndex(5),
+       "task": "Producing specifications"
+   }, {
+       "category": "Module #2",
+       "start": "2019-01-16",
+       "end": "2019-02-05",
+       "color": colorSet.getIndex(5),
+       "task": "Development"
+   }, {
+       "category": "Module #2",
+       "start": "2019-02-10",
+       "end": "2019-02-18",
+       "color": colorSet.getIndex(5),
+       "task": "Testing and QA"
+   }, {
+       "category": ""
+   }, {
+       "category": "Module #3",
+       "start": "2019-01-01",
+       "end": "2019-01-19",
+       "color": colorSet.getIndex(9),
+       "task": "Gathering requirements"    
+   }, {
+       "category": "Module #3",
+       "start": "2019-02-01",
+       "end": "2019-02-10",
+       "color": colorSet.getIndex(9),
+       "task": "Producing specifications"
+   }, {
+       "category": "Module #3",
+       "start": "2019-03-10",
+       "end": "2019-04-15",
+       "color": colorSet.getIndex(9),
+       "task": "Development"
+   }, {
+       "category": "Module #3",
+       "start": "2019-04-20",
+       "end": "2019-04-30",
+       "color": colorSet.getIndex(9),
+       "task": "Testing and QA",
+       "disabled2":false,
+       "image2":"/wp-content/uploads/assets/timeline/rachel.jpg",
+       "location":0
+   }, {
+       "category": "Module #4",
+       "start": "2019-01-15",
+       "end": "2019-02-12",
+       "color": colorSet.getIndex(15),
+       "task": "Gathering requirements",
+       "disabled1":false,
+       "image1":"/wp-content/uploads/assets/timeline/monica.jpg"
+   }, {
+       "category": "Module #4",
+       "start": "2019-02-25",
+       "end": "2019-03-10",
+       "color": colorSet.getIndex(15),
+       "task": "Development"
+   }, {
+       "category": "Module #4",
+       "start": "2019-03-23",
+       "end": "2019-04-29",
+       "color": colorSet.getIndex(15),
+       "task": "Testing and QA"
+   }];
+   
+   chart.dateFormatter.dateFormat = "yyyy-MM-dd";
+   chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+   chart.fontSize = 11;
+   
+   var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+   categoryAxis.dataFields.category = "category";
+   categoryAxis.renderer.grid.template.disabled = true;
+   categoryAxis.renderer.labels.template.paddingRight = 25;
+   categoryAxis.renderer.minGridDistance = 10;
+   categoryAxis.renderer.innerRadius = -60;
+   categoryAxis.renderer.radius = 60;
+   
+   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+   dateAxis.renderer.minGridDistance = 70;
+   dateAxis.baseInterval = { count: 1, timeUnit: "day" };
+   dateAxis.renderer.tooltipLocation = 0;
+   dateAxis.startLocation = -0.5;
+   dateAxis.renderer.line.strokeDasharray = "1,4";
+   dateAxis.renderer.line.strokeOpacity = 0.6;
+   dateAxis.tooltip.background.fillOpacity = 0.2;
+   dateAxis.tooltip.background.cornerRadius = 5;
+   dateAxis.tooltip.label.fill = new am4core.InterfaceColorSet().getFor("alternativeBackground");
+   dateAxis.tooltip.label.paddingTop = 7;
+   
+   var labelTemplate = dateAxis.renderer.labels.template;
+   labelTemplate.verticalCenter = "middle";
+   labelTemplate.fillOpacity = 0.7;
+   labelTemplate.background.fill = new am4core.InterfaceColorSet().getFor("background");
+   labelTemplate.background.fillOpacity = 1;
+   labelTemplate.padding(7, 7, 7, 7);
+   
+   var series = chart.series.push(new am4plugins_timeline.CurveColumnSeries());
+   series.columns.template.height = am4core.percent(20);
+   series.columns.template.tooltipText = "{task}: [bold]{openDateX}[/] - [bold]{dateX}[/]";
+   
+   series.dataFields.openDateX = "start";
+   series.dataFields.dateX = "end";
+   series.dataFields.categoryY = "category";
+   series.columns.template.propertyFields.fill = "color"; // get color from data
+   series.columns.template.propertyFields.stroke = "color";
+   series.columns.template.strokeOpacity = 0;
+   
+   var bullet = series.bullets.push(new am4charts.CircleBullet());
+   bullet.circle.radius = 3;
+   bullet.circle.strokeOpacity = 0;
+   bullet.propertyFields.fill = "color";
+   bullet.locationX = 0;
+   
+   
+   var bullet2 = series.bullets.push(new am4charts.CircleBullet());
+   bullet2.circle.radius = 3;
+   bullet2.circle.strokeOpacity = 0;
+   bullet2.propertyFields.fill = "color";
+   bullet2.locationX = 1;
+   
+   
+   var imageBullet1 = series.bullets.push(new am4plugins_bullets.PinBullet());
+   imageBullet1.disabled = true;
+   imageBullet1.propertyFields.disabled = "disabled1";
+   imageBullet1.locationX = 1;
+   imageBullet1.circle.radius = 20;
+   imageBullet1.propertyFields.stroke = "color";
+   imageBullet1.background.propertyFields.fill = "color";
+   imageBullet1.image = new am4core.Image();
+   imageBullet1.image.propertyFields.href = "image1";
+   
+   var imageBullet2 = series.bullets.push(new am4plugins_bullets.PinBullet());
+   imageBullet2.disabled = true;
+   imageBullet2.propertyFields.disabled = "disabled2";
+   imageBullet2.locationX = 0;
+   imageBullet2.circle.radius = 20;
+   imageBullet2.propertyFields.stroke = "color";
+   imageBullet2.background.propertyFields.fill = "color";
+   imageBullet2.image = new am4core.Image();
+   imageBullet2.image.propertyFields.href = "image2";
+   
+   
+   var eventSeries = chart.series.push(new am4plugins_timeline.CurveLineSeries());
+   eventSeries.dataFields.dateX = "eventDate";
+   eventSeries.dataFields.categoryY = "category";
+   eventSeries.data = [
+       { category: "", eventDate: "2019-01-15", letter: "A", description: "Something happened here" },
+       { category: "", eventDate: "2019-01-23", letter: "B", description: "Something happened here" },
+       { category: "", eventDate: "2019-02-10", letter: "C", description: "Something happened here" },
+       { category: "", eventDate: "2019-02-29", letter: "D", description: "Something happened here" },
+       { category: "", eventDate: "2019-03-06", letter: "E", description: "Something happened here" },
+       { category: "", eventDate: "2019-03-12", letter: "F", description: "Something happened here" },
+       { category: "", eventDate: "2019-03-22", letter: "G", description: "Something happened here" }];
+   eventSeries.strokeOpacity = 0;
+   
+   var flagBullet = eventSeries.bullets.push(new am4plugins_bullets.FlagBullet())
+   flagBullet.label.propertyFields.text = "letter";
+   flagBullet.locationX = 0;
+   flagBullet.tooltipHTML = "<b>{description}<b>";
+   
+   chart.scrollbarX = new am4core.Scrollbar();
+   chart.scrollbarX.align = "center"
+   chart.scrollbarX.width = am4core.percent(85);
+   
+   var cursor = new am4plugins_timeline.CurveCursor();
+   chart.cursor = cursor;
+   cursor.xAxis = dateAxis;
+   cursor.yAxis = categoryAxis;
+   cursor.lineY.disabled = true;
+   cursor.lineX.strokeDasharray = "1,4";
+   cursor.lineX.strokeOpacity = 1;
+   
+   dateAxis.renderer.tooltipLocation2 = 0;
+   categoryAxis.cursorTooltipEnabled = false;
+   </script>
+   <style>#chartdiv {width: 100%;height: 1000px;}</style><div id="chartdiv"></div>
+</body>  
+</html>
