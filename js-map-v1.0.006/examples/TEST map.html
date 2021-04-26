@@ -272,6 +272,13 @@
     background-color: rgba(255, 255, 255, 1);
   }
   /*  --- end Legend specific  ---*/
+
+  canvas#live2dcanvas {
+    border: 0 !important;
+    position: fixed;
+    right: 0;
+    bottom: -78px;
+  }
   </style>
   <link rel="stylesheet" href="../libs/preload.css"><script> setTimeout(function() {document.body.classList.add('loaded');}, 600)</script>
 
@@ -280,7 +287,7 @@
   <script src="data.json"></script>
   <script type="text/javascript" src="../libs/markerclusterer.js"></script>
   <script src="speed_test.js"></script>
-  <script type="text/javascript" src="../libs/resize-map.js"></script>
+  
   <script>
     google.maps.event.addDomListener(window, 'load', speedTest.init);
   </script>
@@ -339,11 +346,15 @@
     <div id="legend" class="leaflet-control"><h4>Состояние</h4><i style="background: #477AC2"></i><span>Low</span><br><i style="background: #448D40"></i><span>Medium</span><br><i style="background: #E6E696"></i><span>High</span><br><i style="background: #E8E6E0"></i><span>Full</span><br><i style="background: #FFFFFF"></i><span>Down</span><br></div>
     <div id="resize-vertical"></div>
   </div>
-
+  
+  <script type="text/javascript" src="../libs/resize-map.js"></script>
   <script type="text/javascript" src="../libs/resize-columns.js"></script>
   <script type="text/javascript" src="../libs/hide-columns.js"></script>
   <script type="text/javascript" src="../libs/sorted-table.js"></script>
   
-</body>
-
+  <canvas id="live2dcanvas" width="200" height="400"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-koharu/assets/koharu.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+</body>  
 </html>
