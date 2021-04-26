@@ -30,8 +30,6 @@ speedTest.init = function() {
   var useGmm = $('usegmm');
   google.maps.event.addDomListener(useGmm, 'click', speedTest.change);
   
-  var numMarkers = $('nummarkers');
-  google.maps.event.addDomListener(numMarkers, 'change', speedTest.change);
 
   speedTest.infoWindow = new google.maps.InfoWindow({maxWidth: 200});
 
@@ -52,8 +50,8 @@ speedTest.showMarkers = function() {
     speedTest.markerClusterer.clearMarkers();
   }
 
-  var panel = $('markerlist');
-
+ 
+  var panel = $('markerlist');panel.innerHTML = "";
   for (var i = 0; i < speedTest.servers.length; i++) {
     var titleText = speedTest.servers[i].title;
     var statusText = speedTest.servers[i].status_text;
