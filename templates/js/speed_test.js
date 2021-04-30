@@ -66,8 +66,7 @@ speedTest.showMarkers = function() {
     var statusText = speedTest.servers[i].statusText;
     var statusColor = speedTest.servers[i].color;
     var markerColor = speedTest.servers[i].color.replace("#", "");
-//    var ipportText = speedTest.servers[i].ipport;
-    var ipportText = speedTest.servers[i].server;
+    var serverAdress = speedTest.servers[i].server;
 
 
     var item = document.createElement('tr');
@@ -87,7 +86,7 @@ speedTest.showMarkers = function() {
     title.innerHTML = `<span class="flag-icon flag-icon-${["ru","ru","ru","ru", "gb", "ua"].sample()}"></span>${titleText}`;
 
     ipport.className = "ipport"
-    ipport.innerHTML = `<span class="ipport_text">${ipportText}</span>`
+    ipport.innerHTML = `<span class="ipport_text">${serverAdress}</span>`
 
 
     item.appendChild(status);
@@ -131,8 +130,8 @@ speedTest.markerClickFunction = function(server, latlng) {
     `<div class="info">
       <h3> ${server.title} ${linkIcon}</h3>
       <div class="status">
-        <span class="label" style="background-color:${server.status_color}">
-        ${server.status_text}
+        <span class="label" style="background-color:${server.color}">
+        ${server.statusText}
         </span>
       </div>
       <div class="info-body">
