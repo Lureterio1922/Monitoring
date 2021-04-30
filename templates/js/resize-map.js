@@ -5,6 +5,8 @@ function $(element) {
 var res = {} 
 var hres = {} 
 var vres = {} 
+var fullWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var fullHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
 
 window.onload = function() 
 {   
@@ -26,7 +28,7 @@ window.onload = function()
   vres.curr_height =  vres.d.offsetHeight;
   vres.unlock = false;
   vres.r.addEventListener('mousedown', vres.mousedown, false);
-  // vertical------------------------\
+  // vertical------------------------/
   
   document.addEventListener('mousemove', mousemove, false);
   document.addEventListener('mouseup', mouseup, false);
@@ -40,7 +42,7 @@ function mousemove(e)
 
   if( hres.unlock) {
       if(change > 300) {
-        if (change < window.screen.width-600){
+        if (change < fullWidth-200){
           hres.p.style.width = change + 'px';
           hres.d.style.marginLeft  =  change + 'px';
         }
@@ -50,10 +52,9 @@ function mousemove(e)
         hres.d.style.marginLeft  =  '300px';
         }
     }
-
   if( vres.unlock) {
       if(vchange > 550) {
-        if (vchange < window.screen.height-200){
+        if (vchange < fullHeight-200){
           vres.p.style.height = vchange + 'px';
           vres.p2.style.height = vchange - 150 + 'px';
           vres.d.style.height  =  vchange + 'px';
@@ -74,11 +75,11 @@ vres.mousedown = function(e) {
   e.onselectstart = function() {
     return false;
   };
-  console.log("Click");
 
   vres.curr_height = vres.d.offsetHeight;
   vres.unlock = true;
 };
+
 hres.mousedown = function(e) {
     document.onselectstart = () => {
       return false; // cancel selection

@@ -28,9 +28,8 @@ def get_client_info(request, client_id):
         result.append(d)
     cl = client.get_dict()
     cl["appointments"] =result
-
-
     return JsonResponse(data=cl, safe=False)
+
 
 def get_map(request):
     template, context = get_template_context()
