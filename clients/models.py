@@ -1,7 +1,11 @@
 from django.db import models
+from django.db import models
 from django.db.models import Model
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from django.forms import forms
+from django_countries.fields import CountryField
+
 
 NORMAL = "1"
 Server_lies = "2"
@@ -42,6 +46,8 @@ def get_status_text(client):
     return "None"
 
 
+
+
 class Client(Model):
     class Meta:
         verbose_name = 'клиент'
@@ -53,6 +59,7 @@ class Client(Model):
     url = models.CharField(verbose_name='Ссылка', max_length=1000, default='')
     description = models.TextField(verbose_name='Описание', default='', blank=True)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
+    country = CountryField()
 
     def __str__(self):
         return self.name
@@ -67,8 +74,10 @@ class Client(Model):
             "statusText": get_status_text(self),
             "server": "yandex.ru",
             "description": self.description,
+            "contry": self.country.code,
             "id": self.id
         }
+
 
 
 class Appointment(Model):
@@ -104,3 +113,6 @@ def appointment_save(sender, instance, **kwargs):
     clien_appointment.client = instance.client
     clien_appointment.appointment = instance
     clien_appointment.save()
+
+
+
