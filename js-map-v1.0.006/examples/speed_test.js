@@ -35,7 +35,7 @@ speedTest.init = function() {
 
   speedTest.showMarkers();
   speedTest.ImportSearchLib()
-  speedTest.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push($('legend'));
+  speedTest.ImportLegendLib()
 };
 
 speedTest.showMarkers = function() {
@@ -73,7 +73,8 @@ speedTest.showMarkers = function() {
  
     title.href = '#';
     title.className =  'title';
-    title.innerHTML = titleText;
+    Array.prototype.sample = function(){return this[Math.floor(Math.random()*this.length)];}
+    title.innerHTML = `<span class="flag-icon flag-icon-${["ru","ru","ru","ru", "gb", "ua"].sample()}"></span>${titleText}`;
 
     ipport.className = "ipport"
     ipport.innerHTML = `<span class="ipport_text">${ipportText}</span>`
@@ -115,23 +116,24 @@ speedTest.markerClickFunction = function(server, latlng) {
       e.stopPropagation();
       e.preventDefault();
     }
+    var linkIcon = `<a href="#" target="_blank"> <i class="fa fa-link" style="color:#999999; font-size: 0.7em; right: 30px"> </i></a>`
     var infoHtml = 
     `<div class="info">
-      <h3> ${server.title}</h3>
+      <h3> ${server.title} ${linkIcon}</h3>
       <div class="status">
         <span class="label" style="background-color:${server.status_color}">
         ${server.status_text}
         </span>
       </div>
       <div class="info-body">
-        <div target="_blank">
+        <div>
           <div class="description">
           Lorem Ipsum is simply dummy text of the printing 
           
           </div>
         </a>
       </div>
-      <div href="LOGO.png" target="_blank">
+      <div href="LOGO.png">
       </div><br/>
       Ссылка: <a href="#" target="_blank">TODO</a>
     </div>`;
@@ -174,6 +176,14 @@ speedTest.time = function() {
   var end = new Date();
   $('timetaken').innerHTML = end - start;
 };
+
+speedTest.ImportLegendLib = function() { 
+  var legend = $('legend')
+  legend.innerHTML += `<i style="background: #477AC2"></i><span>Low</span><br><i style="background: #448D40"></i><span>Medium</span><br><i style="background: #E6E696"></i><span>High</span><br><i style="background: #E8E6E0"></i><span>Full</span><br><i style="background: #FFFFFF"></i><span>Down</span><br>`
+  speedTest.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
+  setTimeout(function() { legend.classList.add('show_legend');}, 900);
+}
 
 speedTest.ImportSearchLib = function() {
   // Create the search box and link it to the UI element.
