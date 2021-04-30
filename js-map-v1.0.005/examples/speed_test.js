@@ -25,8 +25,7 @@ speedTest.init = function() {
   
   var useGmm = $('usegmm');
   google.maps.event.addDomListener(useGmm, 'click', speedTest.change);
-  
-  var numMarkers = $('nummarkers');
+    var numMarkers = $('nummarkers');
   google.maps.event.addDomListener(numMarkers, 'change', speedTest.change);
 
   speedTest.infoWindow = new google.maps.InfoWindow();

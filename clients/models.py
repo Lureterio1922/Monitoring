@@ -1,7 +1,11 @@
 from django.db import models
+from django.db import models
 from django.db.models import Model
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from django.forms import forms
+from django_countries.fields import CountryField
+
 
 def get_color(client):
     if client.status == NORMAL:
@@ -26,6 +30,8 @@ Last_minute_applications = "4"
 Integration_system_problems = "5"
 WARNING = "6"
 
+
+
 class Client(Model):
     class Meta:
         verbose_name = 'клиент'
@@ -47,6 +53,7 @@ class Client(Model):
         (Integration_system_problems, "Проблемы с системой интеграции"),
         (WARNING, "Предупреждение"),
     )
+    country = CountryField()
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
 
     def __str__(self):
@@ -60,8 +67,10 @@ class Client(Model):
             "name": self.name,
             "status": self.status,
             "description": self.description,
-            "id":self.id
+            "contry": self.country.code,
+            "id": self.id
         }
+
 
 
 class Appointment(Model):
@@ -93,3 +102,6 @@ def appointment_save(sender, instance, **kwargs):
     clien_appointment.client = instance.client
     clien_appointment.appointment = instance
     clien_appointment.save()
+
+
+
