@@ -1,7 +1,7 @@
 var data = {"servers": [
     {"title": "Atardecer en Embalse",  "longitude": -64.404945, "latitude": -32.202924, "marker_color": "008CFF",  "status_text":"Normal", "status_color":"#39e76d", "ipport": "62.122.215.70:27015"}
     ,
-    {"title": "Rosina Lamberti,Sunset,TemplestoweLamberti,Sunset,TemplestoweLamberti,Sunset,TemplestoweLamberti,Sunset,Templestowe",  "longitude": 145.141754, "latitude": -37.766372, "marker_color": "008CFF",  "status_text":"Normal", "status_color":"#39e76d", "ipport": "62.122.215.70:27015"}
+    {"title": "Rosina Lamberti,Sunset ,TemplestoweLamberti,Sunset ,TemplestoweLamberti,Sunset ,TemplestoweLamberti,Sunset ,Templestowe",  "longitude": 145.141754, "latitude": -37.766372, "marker_color": "008CFF",  "status_text":"Normal", "status_color":"#39e76d", "ipport": "62.122.215.70:27015"}
     ,
     {"title": "kin-dza-dza",  "longitude": 30.785408, "latitude": 46.639301, "marker_color": "008CFF",  "status_text":"Normal", "status_color":"#39e76d", "ipport": "62.122.215.70:27015"}
     ,

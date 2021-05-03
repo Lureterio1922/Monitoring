@@ -31,7 +31,7 @@ speedTest.init = function() {
   google.maps.event.addDomListener(useGmm, 'click', speedTest.change);
   
 
-  speedTest.infoWindow = new google.maps.InfoWindow({maxWidth: 200});
+  speedTest.infoWindow = new google.maps.InfoWindow();
 
   speedTest.showMarkers();
   speedTest.ImportSearchLib()
@@ -95,7 +95,8 @@ speedTest.showMarkers = function() {
 
     var marker = new google.maps.Marker({
       'position': latLng,
-      'icon': markerImage
+      'icon': markerImage,
+      "animation": google.maps.Animation.DROP,
     });
 
     var fn = speedTest.markerClickFunction(speedTest.servers[i], latLng, statusColor, statusText);
@@ -116,20 +117,21 @@ speedTest.markerClickFunction = function(server, latlng) {
       e.stopPropagation();
       e.preventDefault();
     }
-    var linkIcon = `<a href="#" target="_blank"> <i class="fa fa-link" style="color:#999999; font-size: 0.7em; right: 30px"> </i></a>`
     var infoHtml = 
     `<div class="info">
-      <h3> ${server.title} ${linkIcon}</h3>
-      <div class="status">
-        <span class="label" style="background-color:${server.status_color}">
+      <div class="info_title_wrap">
+        <h3 class="info_title_text two_line_ellipsis"> ${server.title}</h3>
+      </div>
+      <div class="info_status_wrap">
+        Статус сервера: 
+        <span class="label" style="background-color:${server.status_color}; float: right;">
         ${server.status_text}
         </span>
       </div>
-      <div class="info-body">
+      <div class="info_body">
         <div>
           <div class="description">
-          Lorem Ipsum is simply dummy text of the printing 
-          
+          Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing 
           </div>
         </a>
       </div>
@@ -140,15 +142,15 @@ speedTest.markerClickFunction = function(server, latlng) {
 
     speedTest.infoWindow.setContent(infoHtml);
     speedTest.infoWindow.setPosition(latlng);
+    
     speedTest.infoWindow.open(speedTest.map);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
     google.maps.event.addListener(speedTest.map, 'click', function() {
       speedTest.infoWindow.close();
     });
   };
 };
-
-
 
 
 speedTest.clear = function() {

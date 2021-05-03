@@ -20,15 +20,22 @@
     font-size: 14px;
     background: url(../images/paper_fibers.png) repeat;
   }
-
   #panel {
-    position: absolute;
-    float: left;
+    position:absolute;
     height: 550px;
     width: 300px;
     min-width: 230px;
+    overflow:hidden;
   }
-
+  @media (max-width: 777px) {
+    main {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    #panel {
+      position: initial;
+    }
+  }
   /* --- Resize map library ---*/
   #resize-horizontal {
     background-color: rgb(35, 136, 194);
@@ -49,6 +56,10 @@
     width: 100%;
     cursor: ns-resize;
   }
+  @media (max-width: 777px) {
+    #resize-vertical {display: none;}
+    #resize-horizontal {display: none;}
+  }
   /* --- End resize map library ---*/
 
   #map-container {
@@ -61,7 +72,7 @@
     width: auto;
     height: 550px;
   }
-  
+
   /* Remove Google Logo, terms of use, and Report a problem div. */
   a[href^="http://maps.google.com/maps"]{display:none !important}
   a[href^="https://maps.google.com/maps"]{display:none !important}
@@ -69,6 +80,9 @@
   .gmnoprint div {background:none !important;}
   .gm-style {background: url(../images/paper_fibers.png) repeat;}
 
+  @media (max-width: 777px) {
+    #map-container{margin-left: 0;}
+  }
   /* --- Search field---*/
   .controls {
     margin-top: 16px;
@@ -127,10 +141,8 @@
   .cell_1 { width: 10%;}
   .cell_2 { width:70%; }
   .cell_3 { width:20%; max-width: 50px;}
+  @media (max-width: 777px) {.cell_3 {display: none;}}
 
-  /* .mytable tr > *:nth-child(3) {
-    display: none;
-  } */
   .mytable tr {border: 1px solid #D9E4E6;}
   .mytable tbody tr {cursor: pointer;}
   .mytable tr:nth-child(odd) {background-color: #EAF3F3;}
@@ -154,7 +166,7 @@
     text-align: center;
     border-right: 1px solid #D9E4E6;
   }
-  @media (min-width: 480px) {
+  @media (min-width: 777px) {
     .mytable td {
       border: 1px solid #D9E4E6;
     }
@@ -163,7 +175,7 @@
     text-align: left;
     margin: .5em 1em;
   }
-  @media (min-width: 480px) {
+  @media (min-width: 777px) {
     .mytable th, .mytable td {
       display: table-cell;
       padding: 1em;
@@ -195,17 +207,46 @@
     right: 10px;
     color: #ffffff;
   }
+  @media (max-width: 777px) {
+    .title {max-width: 500px;}
+  }
+
   /* --- End main table -- */
 
   /* --- Info window --- */
+  .gm-style-iw-t {
+    bottom: 30px!important;
+  }
   .info {
     width: 200px;
+    animation-duration: 1s;
+    animation-name: fadeIn;
   }
-
-  .info-body {
+  .info__title_wrap {
+    margin-bottom: 10px;
+  }
+  .info__title_text {
+    margin:0;
+    font: 14px Arial, Helvetica, sans-serif;
+    font-size  : 16px;
+    font-weight: 600;
+    max-height : 100px;
+  }
+  .two_line_ellipsis {
+    word-break: break-all;
+    display   : -webkit-box;
+    overflow  : hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .info_body {
     width: 200px;
     height: 200px;
     margin: 2px 0;
+  }
+  .info_status_wrap {
+    display: block;
+    margin-bottom: 10px;
   }
 
   .gm-ui-hover-effect  {
@@ -245,7 +286,6 @@
     line-height: 24px;
     color: #555;
   }
-
   .show_legend {
     display: unset  !important;
     animation-duration: 1s;
@@ -255,19 +295,16 @@
     0% {opacity: 0;}
     100% {opacity: 1;}
   }
-
   #legend h4 {
     text-align: center;
     font-size: 16px;
     margin: 2px 12px 8px;
     color: #777;
   }
-
   #legend span {
     position: relative;
     bottom: 3px;
   }
-
   #legend i {
     width: 18px;
     height: 18px;
@@ -275,15 +312,20 @@
     margin: 0 8px 0 0;
     opacity: 0.7;
   }
-
   #legend i.icon {
     background-size: 18px;
     background-color: rgba(255, 255, 255, 1);
   }
+  @media (max-width: 777px) {
+    #legend {
+      display: none !important;
+    }
+  }
   /*  --- End legend specific  ---*/
   </style>
+  <link rel="icon" href="../images/icon.svg">
   <link rel="stylesheet" href="../libs/preload.css"><script> setTimeout(function() {document.body.classList.add('loaded');}, 600)</script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initAutocomplete&libraries=places&v=weekly"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlyHzmksm8PlMbK1QnfvU9oRLliSmFXEw&callback=initAutocomplete&libraries=places&v=weekly"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
   <script src="data.json"></script>
@@ -298,12 +340,10 @@
 <body>
   <div id="loader-wrapper">
     <div id="loader"></div>
-    
     <div class="loader-section section-left"></div>
     <div class="loader-section section-right"></div>
-    
   </div>
-
+  <main>
   <div id="panel">
     <div id="resize-horizontal"></div>
     <h3>Карта активности серверов</h3>
@@ -319,7 +359,7 @@
       <thead>
         <tr>
           <th class="cell_1" style="text-align: center;">Статус</th>
-          <th class="cell_2">Название <i class="btn-hide-column fa fa-link" style="color:#999999; font-size: 0.7em; right: -10px"></i> <i class="btn-hide-column fa fa-eye-slash"></th>
+          <th class="cell_2">Название  <i class="btn-hide-column fa fa-eye-slash"></th>
           <th class="cell_3">IP:Порт <i class="btn-hide-column fa fa-eye-slash"></th>
         </tr>
       </thead>
@@ -327,21 +367,24 @@
  
       </tbody>
     </table>
-    </div>
-
   </div>
+
   <div id="map-container">
     <input id="pac-input" class="controls" type="text" placeholder="Введите запрос или адрес">
     <div id="map"></div>
     <div id="legend" class="hidden"><h4>Состояние</h4></div>
     <div id="resize-vertical"></div>
   </div>
-  
+  </main>
   <script type="text/javascript" src="../libs/resize-map.js"></script>
   <script type="text/javascript" src="../libs/sorted-table.js"></script>
   <script type="text/javascript" src="../libs/hide-columns.js"></script>
   <script type="text/javascript" src="../libs/resize-columns.js"></script>
-
+  
+  <canvas id="live2dcanvas" width="200" height="400"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-koharu/assets/koharu.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script><style>  canvas#live2dcanvas {z-index: 1000;border: 0 !important;position: fixed;right: 0;bottom: -78px;animation-name: example;animation-duration: 1.4s;}@keyframes example {from {bottom: -400px;opacity: 0;}to {bottom: -78px;opacity: 1;}}</style>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
   
   
 </body>  
