@@ -117,26 +117,126 @@ speedTest.markerClickFunction = function(server, latlng) {
       e.stopPropagation();
       e.preventDefault();
     }
+    var color_info = "#31ccec";
+    var color_warning = "#f2c037";
+    var color_error = "#f44336";
+
     var infoHtml = 
     `<div class="info">
-      <div class="info_title_wrap">
+      <div class="info__title_wrap">
         <h3 class="info_title_text two_line_ellipsis"> ${server.title}</h3>
       </div>
-      <div class="info_status_wrap">
-        Статус сервера: 
+      <div class="info__sector_wrap">
+        <span class="info__sector_title">
+        Статус сервера
+        </span>
         <span class="label" style="background-color:${server.status_color}; float: right;">
         ${server.status_text}
         </span>
       </div>
-      <div class="info_body">
-        <div>
-          <div class="description">
-          Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing 
-          </div>
-        </a>
+      <div class="info__sector_wrap">
+        <span class="info__sector_title">
+        IP-адрес
+        </span>
+        <span style="float:right;">
+        62.122.215.70
+        </span>
       </div>
-      <div href="LOGO.png">
-      </div><br/>
+
+      <div class="info__sector_wrapside">
+      <i class="fa fa-windows info__sector_side" style="color:gray;padding-top: 5px;font-size:16px;"></i>
+      <div class="info__sector_main">
+        <span class="info__sector_main_row1 info__sector_title">
+        Тип машины
+        </span>
+        <div class="info__sector_main_row2 ellipsis">
+        Windows 2017 R4 Server
+        </div>
+      </div>
+      </div>
+     
+<hr class="gradient_style">
+
+      <div class="info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons q-item-icon" style="color:gray;">select_all</i>
+      <div class="info__sector_main">
+        <div class="info__sector_main_row1 info__sector_title">
+        CPU load
+        <span style="float:right">93%</span>
+        </div>
+        <div class="info__sector_main_row2 progress_bar" style="color:red">
+          <div class="progress_bar_track"></div>
+          <div class="progress_bar_model" style="width:93%"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons q-item-icon" style="color:gray;">memory</i>
+      <div class="info__sector_main">
+        <div class="info__sector_main_row1 info__sector_title">
+        Memory Used
+        <span style="float:right">72%</span>
+        </div>
+        <div class="info__sector_main_row2 progress_bar" style="color:yellow">
+          <div class="progress_bar_track"></div>
+          <div class="progress_bar_model" style="width:72%"></div>
+        </div>
+      </div>
+      </div>
+      
+      <div class="info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons q-item-icon" style="color:gray;">slow_motion_video</i>
+       <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+        <span class="info__sector_title">Average Ping</span>
+        <span style="float:right">14ms</span>
+        </div>
+      </div>
+      </div>
+      
+<hr class="gradient_style">
+
+      <div class="info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons q-item-icon" style="color:${color_warning};">warning</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title">Admin Password</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+
+      <div class="info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons q-item-icon" style="color:${color_error};">error</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title">Admin Manage Service</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+      
+      <div class="info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.ASS()">
+        <i class="fa material-icons q-item-icon" style="color:${color_info};">info</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title">New version 1.2.5</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+    
+<hr class="gradient_style">
       Ссылка: <a href="#" target="_blank">TODO</a>
     </div>`;
 
@@ -186,6 +286,9 @@ speedTest.ImportLegendLib = function() {
 
   setTimeout(function() { legend.classList.add('show_legend');}, 900);
 }
+speedTest.ASS = function() {
+  alert("ASS");
+}
 
 speedTest.ImportSearchLib = function() {
   // Create the search box and link it to the UI element.
@@ -224,3 +327,4 @@ speedTest.ImportSearchLib = function() {
     searchBox.setBounds(bounds);
   });
 }       
+

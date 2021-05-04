@@ -8,8 +8,7 @@ for (var i = 0; i < buttons.length; i++) {
 }
 
 function toggleColumn(columnid) {
-	var rows = document.querySelectorAll(`.mytable tr > *:nth-child(${columnid})`);
-  
+	var rows = document.querySelectorAll(`.mytable tr > *:nth-child(${columnid})`); 
   rows.forEach(row => {
   	row.classList.toggle('hidden');
   });

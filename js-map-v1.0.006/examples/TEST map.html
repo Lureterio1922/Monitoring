@@ -74,14 +74,14 @@
   }
 
   /* Remove Google Logo, terms of use, and Report a problem div. */
-  a[href^="http://maps.google.com/maps"]{display:none !important}
-  a[href^="https://maps.google.com/maps"]{display:none !important}
+  a[href^="http://maps.google.com/maps"] {display:none !important}
+  a[href^="https://maps.google.com/maps"] {display:none !important}
   .gm-style-cc { display:none!important;}
   .gmnoprint div {background:none !important;}
   .gm-style {background: url(../images/paper_fibers.png) repeat;}
 
   @media (max-width: 777px) {
-    #map-container{margin-left: 0;}
+    #map-container {margin-left: 0;}
   }
   /* --- Search field---*/
   .controls {
@@ -158,7 +158,6 @@
   .mytable th:hover {background-color: #177a8b;}
   .mytable td {
     display: block;
-    word-wrap: break-word;
     max-height: 1em;
   }
   .mytable td:first-child {
@@ -210,17 +209,17 @@
   @media (max-width: 777px) {
     .title {max-width: 500px;}
   }
-
   /* --- End main table -- */
 
   /* --- Info window --- */
   .gm-style-iw-t {
     bottom: 30px!important;
+    animation-duration: 0.3s;
+    animation-name: fadeIn;
   }
   .info {
     width: 200px;
-    animation-duration: 1s;
-    animation-name: fadeIn;
+    height: 500px;
   }
   .info__title_wrap {
     margin-bottom: 10px;
@@ -232,6 +231,11 @@
     font-weight: 600;
     max-height : 100px;
   }
+  .ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
   .two_line_ellipsis {
     word-break: break-all;
     display   : -webkit-box;
@@ -239,17 +243,63 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
-  .info_body {
-    width: 200px;
-    height: 200px;
-    margin: 2px 0;
-  }
-  .info_status_wrap {
-    display: block;
+  .info__sector_wrap {
     margin-bottom: 10px;
   }
-
-  .gm-ui-hover-effect  {
+  .info__sector_title {
+    font-weight: 400;
+  }
+  .info__sector_wrapside {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+  .info__sector_wrapside_hover {
+    cursor: pointer;
+    padding: 5px 0px 5px 0px;
+    margin-bottom: 0;
+  }
+  .info__sector_wrapside_hover:hover {
+    background-color: #f2fcff;
+  }
+  .info__sector_main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-left: 10px;
+  }
+  
+  .progress_bar {
+    width: 100%;
+    height: 10px;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 7px 9px -7px rgba(0,0,0,.2);
+  }
+  .progress_bar_track {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    background: currentColor;
+    opacity: .2;
+  }
+  .progress_bar_model {
+    height: 100%;
+    position:absolute;
+    background: currentColor;
+    transition: width .3s linear;
+  }
+  hr.gradient_style { 
+    border: 0; 
+    height: 1px; 
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+  }
+  .gm-ui-hover-effect {
     display: none !important;
   }
   /* --- End info window --- */
@@ -324,9 +374,10 @@
   /*  --- End legend specific  ---*/
   </style>
   <link rel="icon" href="../images/icon.svg">
-  <link rel="stylesheet" href="../libs/preload.css"><script> setTimeout(function() {document.body.classList.add('loaded');}, 600)</script>
+  <!-- <link rel="stylesheet" href="../libs/preload.css"><script> setTimeout(function() {document.body.classList.add('loaded');}, 600)</script> -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlyHzmksm8PlMbK1QnfvU9oRLliSmFXEw&callback=initAutocomplete&libraries=places&v=weekly"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
   <script src="data.json"></script>
   <script type="text/javascript" src="../libs/markerclusterer.js"></script>
@@ -382,10 +433,8 @@
   <script type="text/javascript" src="../libs/resize-columns.js"></script>
   
   <canvas id="live2dcanvas" width="200" height="400"></canvas>
-  <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-koharu/assets/koharu.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script><style>  canvas#live2dcanvas {z-index: 1000;border: 0 !important;position: fixed;right: 0;bottom: -78px;animation-name: example;animation-duration: 1.4s;}@keyframes example {from {bottom: -400px;opacity: 0;}to {bottom: -78px;opacity: 1;}}</style>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init({"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
-  
-  
+  <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init( {"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-koharu/assets/koharu.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script><style>  canvas#live2dcanvas {z-index: 1000;border: 0 !important;position: fixed;right: 0;bottom: -78px;animation-name: example;animation-duration: 1.4s;}@keyframes example {from {bottom: -400px;opacity: 0;}to {bottom: -78px;opacity: 1;}}</style>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init( {"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-wanko/assets/wanko.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script><script> L2Dwidget.init( {"model": {"jsonPath": "https://unpkg.com/live2d-widget-model-tororo/assets/tororo.model.json","scale": 1},"display": {"position": "right","width": 150,"height": 300,"hOffset": 0,"vOffset": -20},"mobile": {"show": true,"scale": 0.5},"react": {"opacityDefault": 1,"opacityOnHover": 0.6}});</script> -->
 </body>  
 </html>
