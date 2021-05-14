@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
 from Monitoring.settings import BASE_URL
-from clients.models import Client, Appointment, NORMAL, Integration_system_problems, Server_lies
+from clients.models import Client, Appointment, NORMAL, Integration_system_problems, Server_lies, Active_orders
 
 
 def get_clients(request):
@@ -25,10 +25,20 @@ def check_status(request):
             else:
                 client.status = Integration_system_problems
                 print("Integration_system_problems")
-
         except Exception as e:
             print(str(e))
             client.status = Server_lies
+        appointments = Appointment.objects.filter(client=client)
+        if len(appointments) == 0:
+            client.status = NORMAL
+            print("Normal")
+        else:
+            client.status = Active_orders
+            print("Active orders")
+
+
+
+
 
 
     for client in clients:

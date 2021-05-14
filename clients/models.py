@@ -30,7 +30,7 @@ def get_color(client):
     elif client.status == Server_lies:
         return '#ff0000'
     elif client.status == Active_orders:
-        return '#f08080'
+        return '#ffd700'
     elif client.status == Last_minute_applications:
         return '#8b0000'
     elif client.status == Integration_system_problems:
