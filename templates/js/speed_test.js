@@ -126,18 +126,21 @@ speedTest.markerClickFunction = function (server, latlng) {
     var color_warning = "#f2c037";
     var color_error = "#f44336";
 
+    var data = httpGet(BASE_URL + "/clients/get_client_info/"+server.id)
+
+
     var infoHtml =
       `<div class="info">
   <div style="padding-left:10px;">
       <div class="info__title_wrap">
-        <h3 class="info_title_text two_line_ellipsis"> ${server.title}</h3>
+        <h3 class="info_title_text two_line_ellipsis"> ${data.title}</h3>
       </div>
       <div class="info__sector_wrap">
         <span class="info__sector_title">
         Server Status
         </span>
-        <span class="label" style="background-color:${server.status_color}; float: right;">
-        ${server.status_text}
+        <span class="label ellipsis" style="background-color:${data.color}; float: right; max-width:60%;">
+        ${data.statusText}
         </span>
       </div>
       <div class="info__sector_wrap">
