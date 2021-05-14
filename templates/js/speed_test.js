@@ -148,7 +148,7 @@ speedTest.markerClickFunction = function (server, latlng) {
         Pooling IP Adress
         </span>
         <span style="float:right;">
-        62.122.215.70
+
         </span>
       </div>
 
@@ -159,7 +159,7 @@ speedTest.markerClickFunction = function (server, latlng) {
         Machine Type
         </span>
         <div class="info__sector_main_row2 ellipsis">
-        Windows 2017 R4 Server
+        ${data.machine_type}
         </div>
       </div>
       </div>
