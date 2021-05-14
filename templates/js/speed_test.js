@@ -24,9 +24,6 @@ speedTest.init = function() {
     'zoom': 2,
     'minZoom':2,
     'center': latlng,
-    // 'fullscreenControl': false,
-    // 'streetViewControl': false,
-    // 'zoomControl': false,
     'disableDefaultUI': true,
     'mapTypeId': google.maps.MapTypeId.ROADMAP,
 
@@ -104,7 +101,8 @@ speedTest.showMarkers = function() {
 
     var marker = new google.maps.Marker({
       'position': latLng,
-      'icon': markerImage
+      'icon': markerImage,
+      "animation": google.maps.Animation.DROP,
     });
 
     var fn = speedTest.markerClickFunction(speedTest.servers[i], latLng, statusColor, statusText);
@@ -116,42 +114,143 @@ speedTest.showMarkers = function() {
 
   window.setTimeout(speedTest.time, 0);
 };
-
-speedTest.markerClickFunction = function(server, latlng) {
-  return function(e) {
+speedTest.markerClickFunction = function (server, latlng) {
+  return function (e) {
     e.cancelBubble = true;
     e.returnValue = false;
     if (e.stopPropagation) {
       e.stopPropagation();
       e.preventDefault();
     }
-    var linkIcon = `<a href="#" target="_blank"> <i class="fa fa-link" style="color:#999999; font-size: 0.7em; right: 30px"> </i></a>`
+    var color_info = "#31ccec";
+    var color_warning = "#f2c037";
+    var color_error = "#f44336";
+
     var infoHtml =
-    `<div class="info">
-      <h3> ${server.title} ${linkIcon}</h3>
-      <div class="status">
-        <span class="label" style="background-color:${server.color}">
-        ${server.statusText}
+      `<div class="info">
+  <div style="padding-left:10px;">
+      <div class="info__title_wrap">
+        <h3 class="info_title_text two_line_ellipsis"> ${server.title}</h3>
+      </div>
+      <div class="info__sector_wrap">
+        <span class="info__sector_title">
+        Server Status
+        </span>
+        <span class="label" style="background-color:${server.status_color}; float: right;">
+        ${server.status_text}
         </span>
       </div>
-      <div class="info-body">
-        <div>
-          <div class="description">
-          Lorem Ipsum is simply dummy text of the printing
-
-          </div>
-        </a>
+      <div class="info__sector_wrap">
+        <span class="info__sector_title">
+        Pooling IP Adress
+        </span>
+        <span style="float:right;">
+        62.122.215.70
+        </span>
       </div>
-      <div href="LOGO.png">
-      </div><br/>
-      Ссылка: <a href="#" target="_blank">TODO</a>
-    </div>`;
+
+      <div class="info__sector_wrapside">
+      <i class="fa fa-windows info__sector_first_col" style="color:gray;font-size:20px;"></i>
+      <div class="info__sector_main">
+        <span class="info__sector_main_row1 info__sector_title">
+        Machine Type
+        </span>
+        <div class="info__sector_main_row2 ellipsis">
+        Windows 2017 R4 Server
+        </div>
+      </div>
+      </div>
+  </div>
+<hr class="gradient_style">
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons info__sector_first_col" style="color:gray;">select_all</i>
+      <div class="info__sector_main">
+        <div class="info__sector_main_row1 info__sector_title">
+        CPU load
+        <span style="float:right">93%</span>
+        </div>
+        <div class="info__sector_main_row2 progress_bar" style="color:red">
+          <div class="progress_bar_track"></div>
+          <div class="progress_bar_model" style="width:93%"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons info__sector_first_col" style="color:gray;">memory</i>
+      <div class="info__sector_main">
+        <div class="info__sector_main_row1 info__sector_title">
+        Memory Used
+        <span style="float:right">72%</span>
+        </div>
+        <div class="info__sector_main_row2 progress_bar" style="color:yellow">
+          <div class="progress_bar_track"></div>
+          <div class="progress_bar_model" style="width:72%"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons info__sector_first_col" style="color:gray;">slow_motion_video</i>
+       <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+        <span class="info__sector_title">Average Ping</span>
+        <span style="float:right">14ms</span>
+        </div>
+      </div>
+      </div>
+
+<hr class="gradient_style">
+
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons info__sector_first_col" style="color:${color_warning};">warning</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title two_line_ellipsis">Admin Password</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+        <i class="fa material-icons info__sector_first_col" style="color:${color_error};">error</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title two_line_ellipsis">Admin Manage Service Admin Manage ServiceAdmin Manage Service</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+
+      <div  class="ripple info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.ASS()">
+        <i class="fa material-icons info__sector_first_col" style="color:${color_info};">info</i>
+      <div class="info__sector_main" style="justify-content: center;">
+        <div class="info__sector_main_row1">
+          <span class="info__sector_title two_line_ellipsis">New version 1.2.5</span>
+          <time style="float:right">17:04</time>
+        </div>
+        <div class="info__sector_main_row2 ellipsis">
+        public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String)
+        </div>
+      </div>
+      </div>
+<hr class="gradient_style">
+  Ссылка: <a href="#" target="_blank">TODO</a>
+  </div>`;
 
     speedTest.infoWindow.setContent(infoHtml);
     speedTest.infoWindow.setPosition(latlng);
-    speedTest.infoWindow.open(speedTest.map);
 
-    google.maps.event.addListener(speedTest.map, 'click', function() {
+    speedTest.infoWindow.open(speedTest.map);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    google.maps.event.addListener(speedTest.map, 'click', function () {
       speedTest.infoWindow.close();
     });
   };
@@ -193,7 +292,9 @@ speedTest.ImportLegendLib = function() {
 
   setTimeout(function() { legend.classList.add('show_legend');}, 900);
 }
-
+speedTest.ASS = function () {
+  alert("ASS");
+}
 speedTest.ImportSearchLib = function() {
   // Create the search box and link it to the UI element.
   var input = /** @type {HTMLInputElement} */(
