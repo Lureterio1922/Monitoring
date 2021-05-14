@@ -278,7 +278,7 @@ speedTest.time = function() {
   $('timetaken').innerHTML = 'timing...';
   var start = new Date();
   if ($('usegmm').checked) {
-    speedTest.markerClusterer = new MarkerClusterer(speedTest.map, speedTest.markers, {imagePath: '../images/m'});
+    speedTest.markerClusterer = new MarkerClusterer(speedTest.map, speedTest.markers, {imagePath: '/static/images/m'});
   } else {
     for (var i = 0, marker; marker = speedTest.markers[i]; i++) {
       marker.setMap(speedTest.map);
