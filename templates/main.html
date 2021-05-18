@@ -70,6 +70,10 @@
     0% {opacity: 0;}
     100% {opacity: 1;}
   }
+  @keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+  }
   #legend h4 {
     text-align: center;
     font-size: 16px;
@@ -165,8 +169,8 @@
       <thead>
         <tr>
           <th anim="ripple" class="ripple light cell_1" style="text-align: center;">Status</th>
-          <th anim="ripple" class="ripple light cell_2">Name  <i class="btn-hide-column fa fa-eye-slash"></th>
-          <th class="ripple light cell_3">IP:Port <i class="btn-hide-column fa fa-eye-slash"></th>
+          <th anim="ripple" class="ripple light cell_2">Name  <i class="btn-hide-column fa fa-eye-slash"></i></th>
+          <th class="ripple light cell_3">IP:Port <i class="btn-hide-column fa fa-eye-slash"></i></th>
         </tr>
       </thead>
       <tbody id="markerlist">
