@@ -1,6 +1,10 @@
+import os
+
 from celery import Celery
 
 from clients.views import check_status
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Monitoring.settings')
 
 app = Celery('Monitoring')
 
