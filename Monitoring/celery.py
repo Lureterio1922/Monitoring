@@ -3,7 +3,6 @@ import os
 from celery import Celery
 
 from clients.views import check_status
-from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Monitoring.settings')
 
@@ -29,4 +28,3 @@ app.conf.beat_schedule = {
 }
 
 
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
