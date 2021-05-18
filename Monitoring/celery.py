@@ -7,9 +7,10 @@ from clients.views import check_status
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Monitoring.settings')
 
-app = Celery('Monitoring', broker=CELERY_BROKER_URL)
+app = Celery('Monitoring')
 
 app.config_from_object('django.conf:settings',  namespace='CELERY')
+app.conf.broker_url = 'redis://localhost:6379/0'
 
 
 @app.task
