@@ -2,11 +2,12 @@ import os
 
 from celery import Celery
 
+from Monitoring.settings import CELERY_BROKER_URL
 from clients.views import check_status
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Monitoring.settings')
 
-app = Celery('Monitoring')
+app = Celery('Monitoring', broker=CELERY_BROKER_URL)
 
 app.config_from_object('django.conf:settings',  namespace='CELERY')
 
