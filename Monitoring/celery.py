@@ -3,6 +3,7 @@ import os
 from celery import Celery
 
 from clients.views import check_status
+from django.conf import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Monitoring.settings')
 
@@ -17,7 +18,6 @@ def check_status_server():
     check_status(None)
 
 
-
 app.conf.beat_schedule = {
     'poll-every-minute': {
         'task': 'Monitoring.celery.check_status_server',
@@ -27,3 +27,6 @@ app.conf.beat_schedule = {
         }
     }
 }
+
+
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
