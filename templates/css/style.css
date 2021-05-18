@@ -3,7 +3,7 @@
     padding: 0;
     font-family: Arial;
     /* font-size: 14px; */
-    background: url(images/paper_fibers.png) repeat;
+    background: url(/static/images/paper_fibers.png) repeat;
   }
   #panel {
     position:absolute;
@@ -61,7 +61,7 @@
   a[href^="https://maps.google.com/maps"] {display:none !important}
   .gm-style-cc { display:none!important;}
   .gmnoprint div {background:none !important;}
-  .gm-style {background: url(images/paper_fibers.png) repeat;}
+  .gm-style {background: url(/static/images/paper_fibers.png) repeat;}
 
 
   @media (max-width: 777px) {
