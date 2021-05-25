@@ -146,7 +146,7 @@ speedTest.markerClickFunction = function (server, latlng) {
         Pooling IP Adress
         </span>
         <span style="float:right;">
-        ${server.ip}
+        <a href="${server.ip}" target="_blank">${server.ip}</a>
         </span>
       </div>
       <div class="info__sector_wrapside">

@@ -90,8 +90,8 @@
 
   table thead th {position: sticky; top: 0; z-index: 1; }
 
-  .cell_1 { width: 10%;position: sticky}
-  .cell_2 { width:70%;position: sticky}
+  .cell_1 { width: 10%;position: sticky; }
+  .cell_2 { width:70%;position: sticky;}
   .cell_3 { width:20%;position: sticky;}
   @media (max-width: 777px) {.cell_3 {display: none;}}
 
@@ -132,7 +132,6 @@
     }
   }
   .flag-icon {
-    position: absolute;
     left: -5px;
     margin-right: 3px;
     opacity: 0.8;
