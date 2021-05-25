@@ -72,13 +72,13 @@ class Client(Model):
             "title": self.name,
             "status": self.status,
             "statusText": get_status_text(self),
-            "server": "yandex.ru",
+            "server": self.url,
             "description": self.description,
             "contry": self.country.code,
             "id": self.id,
 
-            'ip': '62.122.215.70',
-            'machine_type': 'Windows 2017 R4 Server',
+            'ip': self.url,
+            'machineType': 'Windows 2017 R4 Server',
         }
 
 class Appointment(Model):

@@ -37,7 +37,7 @@ speedTest.init = function() {
   google.maps.event.addDomListener(useGmm, 'click', speedTest.change);
 
 
-  speedTest.infoWindow = new google.maps.InfoWindow({maxWidth: 200});
+  speedTest.infoWindow = new google.maps.InfoWindow();
 
   speedTest.showMarkers();
   speedTest.ImportSearchLib()
@@ -114,6 +114,7 @@ speedTest.showMarkers = function() {
 
   window.setTimeout(speedTest.time, 0);
 };
+
 speedTest.markerClickFunction = function (server, latlng) {
   return function (e) {
     e.cancelBubble = true;
@@ -126,21 +127,18 @@ speedTest.markerClickFunction = function (server, latlng) {
     var color_warning = "#f2c037";
     var color_error = "#f44336";
 
-    var data = httpGet(BASE_URL + "/clients/get_client_info/"+server.id)
-
-
     var infoHtml =
       `<div class="info">
   <div style="padding-left:10px;">
       <div class="info__title_wrap">
-        <h3 class="info_title_text two_line_ellipsis"> ${data.title}</h3>
+        <h3 class="info_title_text two_line_ellipsis"> ${server.title}</h3>
       </div>
       <div class="info__sector_wrap">
         <span class="info__sector_title">
         Server Status
         </span>
-        <span class="label ellipsis" style="background-color:${data.color}; float: right; max-width:60%;">
-        ${data.statusText}
+        <span class="label ellipsis" style="background-color:${server.color}; float: right; max-width:120px;">
+        ${server.statusText}
         </span>
       </div>
       <div class="info__sector_wrap">
@@ -148,10 +146,9 @@ speedTest.markerClickFunction = function (server, latlng) {
         Pooling IP Adress
         </span>
         <span style="float:right;">
-
+        <a href="${server.ip}" target="_blank">${server.ip}</a>
         </span>
       </div>
-
       <div class="info__sector_wrapside">
       <i class="fa fa-windows info__sector_first_col" style="color:gray;font-size:20px;"></i>
       <div class="info__sector_main">
@@ -159,7 +156,7 @@ speedTest.markerClickFunction = function (server, latlng) {
         Machine Type
         </span>
         <div class="info__sector_main_row2 ellipsis">
-        ${data.machine_type}
+       ${server.machineType}
         </div>
       </div>
       </div>
@@ -178,7 +175,6 @@ speedTest.markerClickFunction = function (server, latlng) {
         </div>
       </div>
       </div>
-
       <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
         <i class="fa material-icons info__sector_first_col" style="color:gray;">memory</i>
       <div class="info__sector_main">
@@ -204,8 +200,7 @@ speedTest.markerClickFunction = function (server, latlng) {
       </div>
 
 <hr class="gradient_style">
-
-      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.showModalWindow()">
         <i class="fa material-icons info__sector_first_col" style="color:${color_warning};">warning</i>
       <div class="info__sector_main" style="justify-content: center;">
         <div class="info__sector_main_row1">
@@ -217,8 +212,7 @@ speedTest.markerClickFunction = function (server, latlng) {
         </div>
       </div>
       </div>
-
-      <div class="ripple info__sector_wrapside info__sector_wrapside_hover">
+      <div class="ripple info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.showModalWindow()">
         <i class="fa material-icons info__sector_first_col" style="color:${color_error};">error</i>
       <div class="info__sector_main" style="justify-content: center;">
         <div class="info__sector_main_row1">
@@ -231,7 +225,7 @@ speedTest.markerClickFunction = function (server, latlng) {
       </div>
       </div>
 
-      <div  class="ripple info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.ASS()">
+      <div  class="ripple info__sector_wrapside info__sector_wrapside_hover" onclick="speedTest.showModalWindow()">
         <i class="fa material-icons info__sector_first_col" style="color:${color_info};">info</i>
       <div class="info__sector_main" style="justify-content: center;">
         <div class="info__sector_main_row1">
@@ -260,7 +254,161 @@ speedTest.markerClickFunction = function (server, latlng) {
 };
 
 
+speedTest.showModalWindow = function() {
+  var title = "Server-1",
+    ip = "192.168.112.101"
+    time = "2021-05-09 18:47:27";
 
+  console.log("ASS");
+  // var exception_info =
+  var modalWindow =
+  `<!-- Modal -->
+  <div class="modal" id="modal-name">
+    <div class="modal__sandbox" onclick="speedTest.closeModalWindow()"></div>
+    <div class="modal__box">
+      <div class="modal__header">
+      <!--Column 1-->
+      <div style="display:flex;flex-direction:row;">
+        <button class="modal__close" onclick="speedTest.closeModalWindow()">&#10006;</button>
+        <span>
+          【ERROR】
+          ${title + ' ' + ip}
+         </span>
+      </div>
+      <!--Column 2-->
+      <time> ${time} </time>
+  </div><!--Header-->
+
+  <div class="modal__body">
+    <dl>
+     <dt> <span> Exception Information </span> </dt>
+     <dd>public abstract boolean com.manage.service.account.IAdminManageService.updateAdminPassword(long,java.lang.String,java.lang.String) </dd>
+
+     <dt> <span> User Information </span> </dt>
+
+      <dd class="dd__item_wrap"> <div class="dd__item_title"> User ID：</div> 13123456789</dd>
+      <dd class="dd__item_wrap"> <div class="dd__item_title">Equipment UUID:</div> f64f2940-fae4-11e7 </dd>
+      <dd class="dd__item_wrap"> <div class="dd__item_title">Device Model ：</div> Android 7 </dd>
+      <dd class="dd__item_wrap"> <div class="dd__item_title">Client IP:</div> 192.168.0.1 </dd>
+      <dd class="dd__item_wrap"> <div class="dd__item_title">Client version number:</div> 1.0.0 </dd>
+
+    <dt> <span> Exception Stack </span> </dt>
+     <dd>
+  com.exception.XingfuException: Account_AdminAccountId_NotExist
+    at com.manage.error.AccountServiceError.error(AccountServiceError.java:135)
+    at com.manage.service.account.impl.AdminManageService.checkAdminAcount(AdminManageService.java:123)
+    at com.manage.service.account.impl.AdminManageService.updateAdminPassword(AdminManageService.java:56)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:606)
+    at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:302)
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+    at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:59)
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+    at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+    at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)
+    at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+    at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+    at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:208)
+    at com.sun.proxy.$Proxy42.updateAdminPassword(Unknown Source)
+    at com.manage.rest.maintain.account.AdminManageController.updateAdminPassword(AdminManageController.java:208)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:606)
+    at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:221)
+    at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:136)
+    at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:110)
+    at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:817)
+    at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:731)
+    at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+    at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+    at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+    at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:968)
+    at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:870)
+    at javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+    at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:844)
+    at javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:303)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:330)
+    at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:118)
+    at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:84)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:113)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:103)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:113)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:154)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:45)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:199)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:50)
+    at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+    at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:342)
+    at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:192)
+    at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:160)
+    at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+    at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:121)
+    at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+    at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:241)
+    at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:208)
+    at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:220)
+    at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:122)
+    at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:505)
+    at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:169)
+    at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:103)
+    at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:956)
+    at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:116)
+    at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:436)
+    at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1078)
+    at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:625)
+    at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:316)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+    at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+    at java.lang.Thread.run(Thread.java:745)
+      </dd>
+    </dl>
+      </div> <!-- Body -->
+    </div> <!-- Body -->
+  </div> <!-- Modal -->
+  `
+  var elem = document.createElement('modal');
+  elem.innerHTML = modalWindow;
+  document.body.append(elem);
+}
+
+speedTest.closeModalWindow = function() {
+  var modal = $('modal-name');
+  if (!modal.classList.contains('close')) {
+    console.log()
+    modal.classList.add('close');
+    setTimeout(function close() {
+        modal.classList.add('hidden');
+      modal.parentNode.removeChild(modal);
+    }, 400);
+  }
+
+}
 
 speedTest.clear = function() {
   $('timetaken').innerHTML = 'cleaning...';
