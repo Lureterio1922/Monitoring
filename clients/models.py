@@ -74,7 +74,7 @@ class Client(Model):
             "statusText": get_status_text(self),
             "server": "yandex.ru",
             "description": self.description,
-            "contry": self.country.code,
+            "country": self.country.code,
             "id": self.id,
 
             'ip': '62.122.215.70',

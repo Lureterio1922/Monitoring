@@ -80,7 +80,7 @@ speedTest.showMarkers = function() {
     title.href = '#';
     title.className =  'title';
     Array.prototype.sample = function(){return this[Math.floor(Math.random()*this.length)];}
-    title.innerHTML = `<span class="flag-icon flag-icon-${["ru","ru","ru","ru", "gb", "ua"].sample()}"></span>${titleText}`;
+    title.innerHTML = `<span class="flag-icon flag-icon-${speedTest.servers[i].contry}"></span>${titleText}`;
 
     ipport.className = "ipport"
     ipport.innerHTML = `<span class="ipport_text">${serverAdress}</span>`
