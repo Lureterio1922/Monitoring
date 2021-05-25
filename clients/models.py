@@ -64,7 +64,7 @@ class Client(Model):
     url = models.CharField(verbose_name='Ссылка', max_length=1000, default='')
     description = models.TextField(verbose_name='Описание', default='', blank=True)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
-    operation_system = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
+    operation_system = models.CharField(max_length=100, choices=types_operations_system, default=NORMAL)
     country = CountryField()
 
     def __str__(self):
