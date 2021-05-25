@@ -78,7 +78,7 @@ class Client(Model):
             "id": self.id,
 
             'ip': '62.122.215.70',
-            'machine_type': 'Windows 2017 R4 Server',
+            'machineType': 'Windows 2017 R4 Server',
         }
 
 class Appointment(Model):
