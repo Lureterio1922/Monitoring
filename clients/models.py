@@ -23,6 +23,11 @@ STATUS_CHOICES = (
     (WARNING, "Предупреждение"),
 )
 
+types_operations_system = (
+    ('CentOS7',"CentOS7"),
+    ('CentOS8',"CentOS8"),
+    ('CentOS8-old','CentOS8-old'),
+)
 
 def get_color(client):
     if client.status == NORMAL:
@@ -59,6 +64,7 @@ class Client(Model):
     url = models.CharField(verbose_name='Ссылка', max_length=1000, default='')
     description = models.TextField(verbose_name='Описание', default='', blank=True)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES, default=NORMAL)
+    operation_system = models.CharField(max_length=100, choices=types_operations_system, default=NORMAL)
     country = CountryField()
 
     def __str__(self):
@@ -72,13 +78,13 @@ class Client(Model):
             "title": self.name,
             "status": self.status,
             "statusText": get_status_text(self),
-            "server": "yandex.ru",
+            "server": self.url,
             "description": self.description,
             "country": self.country.code,
             "id": self.id,
 
-            'ip': '62.122.215.70',
-            'machineType': 'Windows 2017 R4 Server',
+            'ip': self.url,
+            'machineType': self.operation_system
         }
 
 class Appointment(Model):
